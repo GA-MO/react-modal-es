@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import styles from './defaultStyles'
 import { canUseDOM } from './helper'
 
-export default class extends React.Component {
+class Modal extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     title: PropTypes.string,
@@ -148,3 +148,5 @@ export default class extends React.Component {
     return ReactDOM.createPortal(element, this.modal)
   }
 }
+
+export default Modal

@@ -1,7 +1,7 @@
 import modalState from './modalState'
 import provider from './provider'
 
-export default (configs) => {
+export default (configs = {}) => {
   const modal = modalState()
   return {
     openModal: modal.openModal,

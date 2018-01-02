@@ -1,3 +1,3 @@
-import Modal from './Modal'
+import modal from './Modal'
 export { default as createModal } from './createModal'
-export default Modal
+export default modal
