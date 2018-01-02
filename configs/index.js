@@ -1,4 +1,4 @@
 module.exports = {
-  name: 'my-react-component',
-  classNamePrefix: 'my-react-component'
+  name: 'react-modal-es',
+  classNamePrefix: 'react-modal-es'
 }

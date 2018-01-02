@@ -1,12 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ReactComponent from 'my-react-component' // React component name in configs/index.js
+import Modal from 'react-modal-es'
+import { connectModal, openModal } from './modal'
+import '../css/style.css'
 
+@connectModal
 class App extends React.Component {
   render() {
     return (
       <div>
-        <ReactComponent />
+        <Modal name='firstModal' title='Title Modal'>Content</Modal>
+        <button onClick={() => openModal('firstModal')}>Open Modal</button>
       </div>
     )
   }

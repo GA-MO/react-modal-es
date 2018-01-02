@@ -1,3 +1,44 @@
-.my-react-component {
+body {
   font-family: Arial;
+}
+
+.modal-es-title {
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-es-content {
+  padding: 15px;
+}
+
+.modal-es-close-button {
+  position: absolute;
+  z-index: 1;
+  right: 10px;
+  top: 16px;
+  width: 32px;
+  height: 22px;
+  opacity: 0.3;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.modal-es-close-button:hover {
+  opacity: 1;
+}
+.modal-es-close-button:before,
+.modal-es-close-button:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 20px;
+  width: 2px;
+  background-color: #333;
+}
+.modal-es-close-button:before {
+  transform: rotate(45deg);
+}
+.modal-es-close-button:after {
+  transform: rotate(-45deg);
 }
