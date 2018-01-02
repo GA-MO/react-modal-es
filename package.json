@@ -1,7 +1,7 @@
 {
   "name": "react-modal-es",
-  "version": "0.1.0",
-  "description": "React boilerplate easy to create npm package react component",
+  "version": "0.1.1",
+  "description": "Easy to control the Modal everywhere.",
   "main": "lib/index.js",
   "scripts": {
     "dev": "webpack-dev-server --hot --inline",
