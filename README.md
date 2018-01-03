@@ -138,7 +138,7 @@ class Page extends React.Component {
 
 ## Config options
 ### Custom UI
-Building your own custom UI and Style.
+Building your own custom UI and Style [demo](https://codesandbox.io/s/p970p0484m)
 
 3 parameters of `customUI`
   - `title` type string
