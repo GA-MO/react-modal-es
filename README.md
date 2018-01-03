@@ -29,7 +29,7 @@ To install, you can use [npm](https://npmjs.org/) or [yarn](https://yarnpkg.com)
 
 ## Usage
 
-- ### Step1:
+### Step1:
 ### Create modal
 Create file `modal.js` and import `createModal` to create modal functions:
  - `openModal(modalName)` to show the Modal
@@ -48,7 +48,7 @@ export const connectModal = modal.connectModal
 
 
 
-- ### Step2:
+### Step2:
 ### Connect Modal
 
 import `connectModal` from `modal.js` and connect modal at root app.
@@ -73,7 +73,7 @@ ReactDOM.render(<App />, document.getElementById('root'))
 ```
 
 
-- ### Step3:
+### Step3:
 ### Modal Component
 The Modal has one required prop [Demo](https://codesandbox.io/s/lpl3524q8z):
 
