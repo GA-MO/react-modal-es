@@ -12,7 +12,12 @@ Easy to control the Modal everywhere.
   * Step2: [Connect Modal](#connect-modal)
   * Step3: [Modal Component](#modal-component)
 * [Props](#props)
-
+* [Config options](#config-options)
+  * [Custom UI](#custom-ui)
+* [Demo](#demo)
+  * [Basic Modal](https://codesandbox.io/s/lpl3524q8z)
+  * [Multiple Modal](https://codesandbox.io/s/301k3j55pq)
+  * [Custom UI Modal](https://codesandbox.io/s/p970p0484m)
 
 ## Installation
 
@@ -24,7 +29,7 @@ To install, you can use [npm](https://npmjs.org/) or [yarn](https://yarnpkg.com)
 
 ## Usage
 
-- ## Step1:
+- ### Step1:
 ### Create modal
 Create file `modal.js` and import `createModal` to create modal functions:
  - `openModal(modalName)` to show the Modal
@@ -43,7 +48,7 @@ export const connectModal = modal.connectModal
 
 
 
-- ## Step2:
+- ### Step2:
 ### Connect Modal
 
 import `connectModal` from `modal.js` and connect modal at root app.
@@ -68,15 +73,14 @@ ReactDOM.render(<App />, document.getElementById('root'))
 ```
 
 
-- ## Step3:
+- ### Step3:
 ### Modal Component
-The Modal has one required prop:
+The Modal has one required prop [Demo](https://codesandbox.io/s/lpl3524q8z):
 
 - `name` to switch show and hide.
 
 ```jsx
 import Modal from 'react-modal-es'
-import 'react-modal-es/css/style.css' // Default style
 import { openModal, closeModal, closeAllModal } from './modal'
 
 class Page extends React.Component {
@@ -92,11 +96,12 @@ class Page extends React.Component {
 ```
 
 #### Open multiple Modals
+Support open multilple modal [demo](https://codesandbox.io/s/301k3j55pq)
 
+Use prop `zIndex` to make a layer of Modal
 
 ```jsx
 import Modal from 'react-modal-es'
-import 'react-modal-es/css/style.css' // Default style
 import { openModal, closeModal, closeAllModal } from './modal'
 
 class Page extends React.Component {
@@ -107,8 +112,8 @@ class Page extends React.Component {
   render() {
     return (
       <div>
-        <Modal name='modal1' title='Title Modal 1'>Content 1</Modal>
-        <Modal name='modal2' title='Title Modal 2'>Content 2</Modal>
+        <Modal name='modal1' title='Title Modal 1' zIndex='1'>Content 1</Modal>
+        <Modal name='modal2' title='Title Modal 2' zIndex='2'>Content 2</Modal>
         <button onClick={this.onOpenModal}>Open Modal</button>
       </div>
     )
@@ -129,4 +134,45 @@ class Page extends React.Component {
 >
 ...
 </Modal>
+```
+
+## Config options
+### Custom UI
+Building your own custom UI and Style.
+
+3 parameters of `customUI`
+  - `title` type string
+  - `children` type function
+  - `onClose` type function
+
+```jsx
+import { createModal } from 'react-modal-es'
+
+const customStyles = {
+  body: {
+    fontFamily: 'arial',
+    background: '#222',
+    color: '#eee',
+    padding: '40px',
+    textAlign: 'center'
+  },
+ ...
+}
+
+const customUIComponent = (title, children, onClose) => (
+  <div style={customStyles.body}>
+    <div style={customStyles.title}>{title}</div>
+    <div style={customStyles.content}>{children}</div>
+    <button style={customStyles.button} onClick={onClose}>
+      close
+    </button>
+  </div>
+)
+
+const configs = {
+  customUI: customUIComponent
+}
+
+const modal = createModal(configs)
+...
 ```

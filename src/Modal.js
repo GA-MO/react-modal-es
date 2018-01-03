@@ -109,6 +109,21 @@ class Modal extends React.Component {
       case 'body': {
         return { ...styles.body, maxWidth }
       }
+      case 'title': {
+        return { ...styles.title }
+      }
+      case 'content': {
+        return { ...styles.content }
+      }
+      case 'buttonArrow': {
+        return { ...styles.buttonArrow }
+      }
+      case 'arrowLeft': {
+        return { ...styles.arrow, transform: 'rotate(45deg)' }
+      }
+      case 'arrowRight': {
+        return { ...styles.arrow, transform: 'rotate(-45deg)' }
+      }
     }
   }
 
@@ -135,11 +150,14 @@ class Modal extends React.Component {
         <div style={this.getStyles('body')}>
           {this.renderCustomUI()}
           {!this.renderCustomUI() && (
-            <React.Fragment>
-              <div className='modal-es-close-button' onClick={this.onCloseModal} />
-              {title !== '' && <div className='modal-es-title'>{title}</div>}
-              <div className='modal-es-content'>{children}</div>
-            </React.Fragment>
+            <div>
+              <div style={this.getStyles('buttonArrow')} onClick={this.onCloseModal}>
+                <div style={this.getStyles('arrowLeft')} />
+                <div style={this.getStyles('arrowRight')} />
+              </div>
+              {title !== '' && <div style={this.getStyles('title')}>{title}</div>}
+              <div style={this.getStyles('content')}>{children}</div>
+            </div>
           )}
         </div>
       </div>

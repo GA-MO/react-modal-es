@@ -28,5 +28,32 @@ export default {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  title: {
+    padding: '15px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    borderBottom: '1px solid #eee'
+  },
+  content: {
+    padding: '15px'
+  },
+  buttonArrow: {
+    position: 'absolute',
+    zIndex: 1,
+    right: '10px',
+    top: '16px',
+    width: '32px',
+    height: '22px',
+    cursor: 'pointer',
+    transition: 'all 0.3s'
+  },
+  arrow: {
+    position: 'absolute',
+    left: '15px',
+    content: ' ',
+    height: '20px',
+    width: '2px',
+    backgroundColor: '#333'
   }
 }
