@@ -142,7 +142,7 @@ Building your own custom UI and Style.
 
 3 parameters of `customUI`
   - `title` type string
-  - `children` type function
+  - `children` type node
   - `onClose` type function
 
 ```jsx
