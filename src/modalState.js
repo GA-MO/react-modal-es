@@ -10,16 +10,16 @@ export default () => {
     })
   }
 
-  const toggleModal = modalName => {
+  const toggleModal = status => modalName => {
     modalNameActiveObj = {
       ...modalNameActiveObj,
-      [modalName]: !modalNameActiveObj[modalName]
+      [modalName]: status
     }
     callListeners(modalNameActiveObj)
   }
 
-  const openModal = toggleModal
-  const closeModal = toggleModal
+  const openModal = toggleModal(true)
+  const closeModal = toggleModal(false)
   const closeAllModal = () => {
     for (let key in modalNameActiveObj) {
       modalNameActiveObj = {
