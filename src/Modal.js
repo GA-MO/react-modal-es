@@ -12,14 +12,16 @@ class Modal extends React.Component {
     maxWidth: PropTypes.string,
     zIndex: PropTypes.number,
     overlayColor: PropTypes.string,
-    willUnmount: PropTypes.func
+    willUnmount: PropTypes.func,
+    willClose: PropTypes.func
   }
 
   static defaultProps = {
     maxWidth: '600px',
     zIndex: 0,
     overlayColor: 'rgba(0, 0, 0, 0.7)',
-    willUnmount: () => false
+    willUnmount: () => false,
+    willClose: () => false
   }
 
   static contextTypes = {
@@ -129,6 +131,7 @@ class Modal extends React.Component {
 
   onCloseModal = () => {
     this.context.closeModal(this.props.name)
+    this.props.willClose()
   }
 
   renderCustomUI = () => {

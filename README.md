@@ -131,6 +131,7 @@ class Page extends React.Component {
   maxWidth='600px'
   center={false}
   willUnmount={() => null}
+  willClose={() => null}
 >
 ...
 </Modal>
