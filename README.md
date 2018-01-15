@@ -129,6 +129,7 @@ class Page extends React.Component {
   title='Modal Title'
   zIndex='1'
   maxWidth='600px'
+  overlayColor='rgba(0, 0, 0, 0.7)'
   center={false}
   willUnmount={() => null}
   willClose={() => null}

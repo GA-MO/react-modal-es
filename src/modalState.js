@@ -2,7 +2,10 @@ export default () => {
   let modalNameActiveObj = {}
   let listeners = []
 
-  const isModalActive = modalName => modalNameActiveObj[modalName]
+  const isModalActive = modalName => {
+    if (modalNameActiveObj[modalName] === undefined) return false
+    return modalNameActiveObj[modalName]
+  }
 
   const callListeners = modalNameActiveObj => {
     listeners.forEach(listner => {

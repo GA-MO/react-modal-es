@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import Animate from 'react-move/Animate'
+import { easeBackOut, easeCircleOut } from 'd3-ease'
 import styles from './defaultStyles'
 import { canUseDOM } from './helper'
 
@@ -142,28 +144,60 @@ class Modal extends React.Component {
   render() {
     const { isActive } = this.state
     const { title, children, overlayColor } = this.props
-    if (!isActive) return null
+    // if (!isActive) return null
 
     const element = (
-      <div style={this.getStyles('wrapper')}>
-        <div
-          style={{ ...this.getStyles('overlay'), background: overlayColor }}
-          onClick={this.onCloseModal}
-        />
-        <div style={this.getStyles('body')}>
-          {this.renderCustomUI()}
-          {!this.renderCustomUI() && (
-            <div>
-              <div style={this.getStyles('buttonArrow')} onClick={this.onCloseModal}>
-                <div style={this.getStyles('arrowLeft')} />
-                <div style={this.getStyles('arrowRight')} />
-              </div>
-              {title !== '' && <div style={this.getStyles('title')}>{title}</div>}
-              <div style={this.getStyles('content')}>{children}</div>
+      <Animate
+        show={isActive}
+        start={{
+          opacity: 0,
+          opacityModal: 0,
+          y: -100
+        }}
+        enter={[
+          {
+            opacity: [1],
+            timing: { duration: 300, ease: easeCircleOut }
+          },
+          {
+            y: [0],
+            opacityModal: [1],
+            timing: { delay: 500, duration: 500, ease: easeBackOut }
+          }
+        ]}
+        leave={[
+          {
+            y: [-100],
+            opacityModal: [0],
+            timing: { duration: 500, ease: easeBackOut }
+          },
+          {
+            opacity: [0],
+            timing: { delay: 300, duration: 300, ease: easeCircleOut }
+          }
+        ]}>
+        {({ opacity, opacityModal, y }) => (
+          <div style={this.getStyles('wrapper')}>
+            <div
+              style={{ ...this.getStyles('overlay'), background: overlayColor, opacity }}
+              onClick={this.onCloseModal}
+            />
+            <div style={{ ...this.getStyles('body'), opacity: opacityModal, transform: `translate3d(0px, ${y}px, 0px)` }}>
+              {this.renderCustomUI()}
+              {!this.renderCustomUI() && (
+                <div>
+                  <div style={this.getStyles('buttonArrow')} onClick={this.onCloseModal}>
+                    <div style={this.getStyles('arrowLeft')} />
+                    <div style={this.getStyles('arrowRight')} />
+                  </div>
+                  {title !== '' && <div style={this.getStyles('title')}>{title}</div>}
+                  <div style={this.getStyles('content')}>{children}</div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+        )}
+      </Animate>
     )
 
     return ReactDOM.createPortal(element, this.modal)
