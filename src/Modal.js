@@ -14,6 +14,7 @@ class Modal extends React.Component {
     maxWidth: PropTypes.string,
     zIndex: PropTypes.number,
     overlayColor: PropTypes.string,
+    didOpen: PropTypes.func,
     willUnmount: PropTypes.func,
     willClose: PropTypes.func
   }
@@ -22,6 +23,7 @@ class Modal extends React.Component {
     maxWidth: '600px',
     zIndex: 0,
     overlayColor: 'rgba(0, 0, 0, 0.7)',
+    didOpen: () => false,
     willUnmount: () => false,
     willClose: () => false
   }
@@ -87,9 +89,16 @@ class Modal extends React.Component {
   }
 
   subscriber = () => {
+    const { didOpen, name } = this.props
+    const isActive = this.context.isModalActive(name)
+
     this.setState({
-      isActive: this.context.isModalActive(this.props.name)
+      isActive
     })
+
+    if (isActive) {
+      didOpen()
+    }
   }
 
   getStyles = name => {

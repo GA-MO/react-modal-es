@@ -131,6 +131,7 @@ class Page extends React.Component {
   maxWidth='600px'
   overlayColor='rgba(0, 0, 0, 0.7)'
   center={false}
+  didOpen={() => null}
   willUnmount={() => null}
   willClose={() => null}
 >
