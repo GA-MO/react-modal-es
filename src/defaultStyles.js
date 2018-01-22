@@ -24,6 +24,11 @@ export default {
     width: '100%',
     borderRadius: '5px'
   },
+  bodyWithClassName: {
+    position: 'relative',
+    margin: '0 auto',
+    width: '100%'
+  },
   center: {
     display: 'flex',
     justifyContent: 'center',

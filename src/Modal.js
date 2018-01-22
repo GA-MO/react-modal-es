@@ -11,6 +11,7 @@ class Modal extends React.Component {
     name: PropTypes.string.isRequired,
     title: PropTypes.string,
     center: PropTypes.bool,
+    className: PropTypes.string,
     maxWidth: PropTypes.string,
     zIndex: PropTypes.number,
     overlayColor: PropTypes.string,
@@ -22,6 +23,7 @@ class Modal extends React.Component {
   static defaultProps = {
     maxWidth: '600px',
     zIndex: 0,
+    className: '',
     overlayColor: 'rgba(0, 0, 0, 0.7)',
     didOpen: () => false,
     willUnmount: () => false,
@@ -102,7 +104,7 @@ class Modal extends React.Component {
   }
 
   getStyles = name => {
-    const { center, maxWidth, zIndex } = this.props
+    const { center, maxWidth, className, zIndex } = this.props
     switch (name) {
       case 'wrapper': {
         let style = {
@@ -120,6 +122,7 @@ class Modal extends React.Component {
         return { ...styles.overlay }
       }
       case 'body': {
+        if (className) return { ...styles.bodyWithClassName, maxWidth }
         return { ...styles.body, maxWidth }
       }
       case 'title': {
@@ -152,7 +155,7 @@ class Modal extends React.Component {
 
   render() {
     const { isActive } = this.state
-    const { title, children, overlayColor } = this.props
+    const { title, children, className, overlayColor } = this.props
     // if (!isActive) return null
 
     const element = (
@@ -191,7 +194,7 @@ class Modal extends React.Component {
               style={{ ...this.getStyles('overlay'), background: overlayColor, opacity }}
               onClick={this.onCloseModal}
             />
-            <div style={{ ...this.getStyles('body'), opacity: opacityModal, transform: `translate3d(0px, ${y}px, 0px)` }}>
+            <div className={className} style={{ ...this.getStyles('body'), opacity: opacityModal, transform: `translate3d(0px, ${y}px, 0px)` }}>
               {this.renderCustomUI()}
               {!this.renderCustomUI() && (
                 <div>
