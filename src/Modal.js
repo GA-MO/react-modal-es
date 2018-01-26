@@ -122,7 +122,7 @@ class Modal extends React.Component {
         return { ...styles.overlay }
       }
       case 'body': {
-        if (className && className !== '') return { ...styles.bodyWithClassName, maxWidth }
+        if (className !== '') return { ...styles.bodyWithClassName, maxWidth }
         return { ...styles.body, maxWidth }
       }
       case 'title': {
