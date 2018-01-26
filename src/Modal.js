@@ -89,16 +89,15 @@ class Modal extends React.Component {
   }
 
   subscriber = () => {
-    const { didOpen, name } = this.props
+    const { didOpen, willClose, name } = this.props
     const isActive = this.context.isModalActive(name)
 
     this.setState({
       isActive
     })
 
-    if (isActive) {
-      didOpen()
-    }
+    if (isActive) didOpen()
+    if (!isActive) willClose()
   }
 
   getStyles = name => {
