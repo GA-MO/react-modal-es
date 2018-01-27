@@ -128,6 +128,7 @@ class Page extends React.Component {
   name='myModal'
   title='Modal Title'
   zIndex='1'
+  className='your-classname'
   maxWidth='600px'
   overlayColor='rgba(0, 0, 0, 0.7)'
   center={false}
