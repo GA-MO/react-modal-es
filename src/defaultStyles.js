@@ -5,7 +5,6 @@ export default {
     left: 0,
     right: 0,
     bottom: 0,
-    padding: '30px 5px',
     boxSizing: 'border-box',
     overflow: 'auto'
   },
@@ -17,17 +16,18 @@ export default {
     bottom: 0,
     background: 'rgba(0, 0, 0, 0.7)'
   },
+  bodyWraper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexGrow: 1,
+    flexShrink: 0
+  },
   body: {
     position: 'relative',
     background: '#fff',
-    margin: '0 auto',
     width: '100%',
-    borderRadius: '5px'
-  },
-  bodyWithClassName: {
-    position: 'relative',
-    margin: '0 auto',
-    width: '100%'
+    borderRadius: '5px',
+    marginTop: '30px'
   },
   center: {
     display: 'flex',

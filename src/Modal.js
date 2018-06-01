@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import Animate from 'react-move/Animate'
@@ -6,7 +6,7 @@ import { easeBackOut, easeCircleOut } from 'd3-ease'
 import styles from './defaultStyles'
 import { canUseDOM } from './helper'
 
-class Modal extends React.Component {
+class Modal extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     title: PropTypes.string,
@@ -39,7 +39,7 @@ class Modal extends React.Component {
     subscriber: PropTypes.func
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -58,7 +58,7 @@ class Modal extends React.Component {
     return modalNameActive === name
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.setState({
       isActive: this.context.isModalActive(this.props.name)
     })
@@ -85,7 +85,7 @@ class Modal extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.props.willUnmount()
     this.container.removeChild(this.modal)
   }
@@ -102,8 +102,8 @@ class Modal extends React.Component {
     if (!isActive) willClose()
   }
 
-  getStyles = name => {
-    const { center, maxWidth, className, zIndex } = this.props
+  getStyles = (name) => {
+    const { center, maxWidth, zIndex } = this.props
     switch (name) {
       case 'wrapper': {
         let style = {
@@ -120,8 +120,10 @@ class Modal extends React.Component {
       case 'overlay': {
         return { ...styles.overlay }
       }
+      case 'bodyWraper': {
+        return { ...styles.bodyWraper }
+      }
       case 'body': {
-        if (className !== '') return { ...styles.bodyWithClassName, maxWidth }
         return { ...styles.body, maxWidth }
       }
       case 'title': {
@@ -152,7 +154,7 @@ class Modal extends React.Component {
     return this.context.customUI(title, children, this.onCloseModal)
   }
 
-  render() {
+  render () {
     const { isActive } = this.state
     const { title, children, className, overlayColor } = this.props
     // if (!isActive) return null
@@ -167,41 +169,60 @@ class Modal extends React.Component {
         }}
         enter={[
           {
-            opacity: [1],
+            opacity: [ 1 ],
             timing: { duration: 300, ease: easeCircleOut }
           },
           {
-            y: [0],
-            opacityModal: [1],
+            y: [ 0 ],
+            opacityModal: [ 1 ],
             timing: { delay: 500, duration: 500, ease: easeBackOut }
           }
         ]}
         leave={[
           {
-            y: [-100],
-            opacityModal: [0],
+            y: [ -100 ],
+            opacityModal: [ 0 ],
             timing: { duration: 500, ease: easeBackOut }
           },
           {
-            opacity: [0],
+            opacity: [ 0 ],
             timing: { delay: 300, duration: 300, ease: easeCircleOut }
           }
-        ]}>
+        ]}
+      >
         {({ opacity, opacityModal, y }) => (
           <div style={this.getStyles('wrapper')}>
             <div
-              style={{ ...this.getStyles('overlay'), background: overlayColor, opacity }}
+              style={{
+                ...this.getStyles('overlay'),
+                background: overlayColor,
+                opacity
+              }}
               onClick={this.onCloseModal}
             />
-            <div className={className} style={{ ...this.getStyles('body'), opacity: opacityModal, transform: `translate3d(0px, ${y}px, 0px)` }}>
+            <div
+              style={{
+                ...this.getStyles('bodyWraper'),
+                opacity: opacityModal,
+                transform: `translate3d(0px, ${y}px, 0px)`
+              }}
+            >
               {this.renderCustomUI()}
               {!this.renderCustomUI() && (
-                <div>
-                  <div style={this.getStyles('buttonArrow')} onClick={this.onCloseModal}>
+                <div
+                  className={className}
+                  style={{ ...this.getStyles('body') }}
+                >
+                  <div
+                    style={this.getStyles('buttonArrow')}
+                    onClick={this.onCloseModal}
+                  >
                     <div style={this.getStyles('arrowLeft')} />
                     <div style={this.getStyles('arrowRight')} />
                   </div>
-                  {title !== '' && <div style={this.getStyles('title')}>{title}</div>}
+                  {title !== '' && (
+                    <div style={this.getStyles('title')}>{title}</div>
+                  )}
                   <div style={this.getStyles('content')}>{children}</div>
                 </div>
               )}
