@@ -9,7 +9,11 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <Modal name='firstModal' title='Title Modal'>
+        <Modal
+          name='firstModal'
+          title='Title Modal'
+          closeOverlayDisabled
+        >
           Content
         </Modal>
         <button onClick={() => openModal('firstModal')}>Open Modal</button>

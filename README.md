@@ -132,6 +132,7 @@ class Page extends React.Component {
   maxWidth='600px'
   overlayColor='rgba(0, 0, 0, 0.7)'
   center={false}
+  closeOverlayDisabled={false} // if you don't want to close modal when touch overlay, change false to true
   didOpen={() => null}
   willUnmount={() => null}
   willClose={() => null}
@@ -150,6 +151,7 @@ Building your own custom UI and Style [demo](https://codesandbox.io/s/p970p0484m
   - `onClose` type function
 
 ```jsx
+import React from 'react'
 import { createModal } from 'react-modal-es'
 
 const customStyles = {
