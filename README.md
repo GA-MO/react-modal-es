@@ -1,8 +1,8 @@
 # react-modal-es
 Easy to control the Modal everywhere.
 
-[![Build Status](https://circleci.com/gh/GA-MO/react-modal-es.png)](https://circleci.com/gh/GA-MO/react-modal-es)
-[![npm version](https://badge.fury.io/js/react-modal-es.png)](https://badge.fury.io/js/react-modal-es)
+[![Build Status](https://circleci.com/gh/GA-MO/react-modal-es.svg)](https://circleci.com/gh/GA-MO/react-modal-es)
+[![npm version](https://badge.fury.io/js/react-modal-es.svg)](https://badge.fury.io/js/react-modal-es)
 
 ## Table of Contents
 
