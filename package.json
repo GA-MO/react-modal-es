@@ -1,6 +1,6 @@
 {
   "name": "react-modal-es",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "description": "Easy to control the Modal everywhere.",
   "main": "lib/index.js",
   "scripts": {
