@@ -154,6 +154,12 @@ class Modal extends Component {
     this.props.willClose()
   }
 
+  handleClickCloseOverlay = () => {
+    const { closeOverlayDisabled } = this.props
+    if (closeOverlayDisabled) return false
+    this.onCloseModal()
+  }
+
   renderCustomUI = () => {
     const { title, children } = this.props
     return this.context.customUI(title, children, this.onCloseModal)
@@ -161,7 +167,7 @@ class Modal extends Component {
 
   render () {
     const { isActive } = this.state
-    const { title, children, className, overlayColor, closeOverlayDisabled } = this.props
+    const { title, children, className, overlayColor } = this.props
     // if (!isActive) return null
 
     const element = (
@@ -203,7 +209,7 @@ class Modal extends Component {
                 background: overlayColor,
                 opacity
               }}
-              onClick={closeOverlayDisabled === false && this.onCloseModal}
+              onClick={this.handleClickCloseOverlay}
             />
             <div
               style={{
