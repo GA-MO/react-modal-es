@@ -15,6 +15,7 @@ class Modal extends Component {
     maxWidth: PropTypes.string,
     zIndex: PropTypes.number,
     overlayColor: PropTypes.string,
+    willCloseWhenTouchOverlay: PropTypes.bool,
     didOpen: PropTypes.func,
     willUnmount: PropTypes.func,
     willClose: PropTypes.func
@@ -24,6 +25,7 @@ class Modal extends Component {
     zIndex: 0,
     className: '',
     overlayColor: 'rgba(0, 0, 0, 0.7)',
+    willCloseWhenTouchOverlay: true,
     didOpen: () => false,
     willUnmount: () => false,
     willClose: () => false
@@ -159,7 +161,7 @@ class Modal extends Component {
 
   render () {
     const { isActive } = this.state
-    const { title, children, className, overlayColor } = this.props
+    const { title, children, className, overlayColor, willCloseWhenTouchOverlay } = this.props
     // if (!isActive) return null
 
     const element = (
@@ -201,7 +203,7 @@ class Modal extends Component {
                 background: overlayColor,
                 opacity
               }}
-              onClick={this.onCloseModal}
+              onClick={willCloseWhenTouchOverlay && this.onCloseModal}
             />
             <div
               style={{
