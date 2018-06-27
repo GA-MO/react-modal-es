@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import Animate from 'react-move/Animate'
@@ -21,7 +21,6 @@ class Modal extends Component {
   }
 
   static defaultProps = {
-    maxWidth: '600px',
     zIndex: 0,
     className: '',
     overlayColor: 'rgba(0, 0, 0, 0.7)',
@@ -124,7 +123,11 @@ class Modal extends Component {
         return { ...styles.bodyWraper }
       }
       case 'body': {
-        return { ...styles.body, maxWidth }
+        if (maxWidth) {
+          return { ...styles.body, width: '100%', maxWidth }
+        }
+
+        return { ...styles.body }
       }
       case 'title': {
         return { ...styles.title }

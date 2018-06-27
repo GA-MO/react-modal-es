@@ -25,7 +25,6 @@ export default {
   body: {
     position: 'relative',
     background: '#fff',
-    width: '100%',
     borderRadius: '5px',
     marginTop: '30px'
   },
@@ -36,6 +35,7 @@ export default {
   },
   title: {
     padding: '15px',
+    paddingRight: '60px',
     fontSize: '18px',
     fontWeight: 'bold',
     borderBottom: '1px solid #eee'

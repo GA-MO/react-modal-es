@@ -6,10 +6,12 @@ import '../css/style.css'
 
 @connectModal
 class App extends React.Component {
-  render() {
+  render () {
     return (
       <div>
-        <Modal name='firstModal' title='Title Modal'>Content</Modal>
+        <Modal name='firstModal' title='Title Modal'>
+          Content
+        </Modal>
         <button onClick={() => openModal('firstModal')}>Open Modal</button>
       </div>
     )
