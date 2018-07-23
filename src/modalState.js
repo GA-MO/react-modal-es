@@ -2,18 +2,18 @@ export default () => {
   let modalNameActiveObj = {}
   let listeners = []
 
-  const isModalActive = modalName => {
+  const isModalActive = (modalName) => {
     if (modalNameActiveObj[modalName] === undefined) return false
     return modalNameActiveObj[modalName]
   }
 
-  const callListeners = modalNameActiveObj => {
-    listeners.forEach(listner => {
+  const callListeners = (modalNameActiveObj) => {
+    listeners.forEach((listner) => {
       listner(modalNameActiveObj)
     })
   }
 
-  const toggleModal = status => modalName => {
+  const toggleModal = (status) => (modalName) => {
     modalNameActiveObj = {
       ...modalNameActiveObj,
       [modalName]: status
@@ -32,8 +32,17 @@ export default () => {
     }
   }
 
-  const subscriber = listener => {
-    listeners = [...listeners, listener]
+  const subscriber = (listener) => {
+    listeners = [ ...listeners, listener ]
+
+    console.log('listeners', listeners)
+
+    return () => {
+      const index = listeners.indexOf(listener)
+      listeners.splice(index, 1)
+
+      console.log('listeners', listeners)
+    }
   }
 
   return {

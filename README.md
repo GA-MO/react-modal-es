@@ -132,7 +132,7 @@ class Page extends React.Component {
   maxWidth='600px'
   overlayColor='rgba(0, 0, 0, 0.7)'
   center={false}
-  closeOverlayDisabled={false} // if you don't want to close modal when touch overlay, change false to true
+  closeOverlayDisabled={false}
   didOpen={() => null}
   willUnmount={() => null}
   willClose={() => null}

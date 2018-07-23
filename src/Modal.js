@@ -63,7 +63,8 @@ class Modal extends Component {
     this.setState({
       isActive: this.context.isModalActive(this.props.name)
     })
-    this.context.subscriber(this.subscriber)
+
+    this.unsubscribe = this.context.subscriber(this.subscriber)
 
     if (canUseDOM()) {
       const id = 'body-modal-es'
@@ -89,6 +90,7 @@ class Modal extends Component {
   componentWillUnmount () {
     this.props.willUnmount()
     this.container.removeChild(this.modal)
+    this.unsubscribe()
   }
 
   subscriber = () => {
