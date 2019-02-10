@@ -6,7 +6,7 @@ import '../css/style.css'
 
 @connectModal
 class App extends React.Component {
-  render () {
+  render() {
     return (
       <div>
         <Modal
@@ -16,8 +16,8 @@ class App extends React.Component {
           className='your-classname'
           maxWidth='600px'
           overlayColor='rgba(0, 0, 0, 0.7)'
-          // center={true}
-          closeOverlayDisabled={false}
+          // center
+          // closeOverlayDisabled
           didOpen={() => console.log('didOpen')}
           willUnmount={() => console.log('willUnmount')}
           willClose={() => console.log('willClose')}

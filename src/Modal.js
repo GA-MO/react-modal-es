@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import Animate from 'react-move/Animate'
-import { easeBackOut, easeCircleOut } from 'd3-ease'
+import Animation from './Animation'
 import styles from './defaultStyles'
 import { canUseDOM } from './helper'
 
@@ -40,7 +39,7 @@ class Modal extends Component {
     subscriber: PropTypes.func
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -59,7 +58,7 @@ class Modal extends Component {
     return modalNameActive === name
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.setState({
       isActive: this.context.isModalActive(this.props.name)
     })
@@ -86,7 +85,7 @@ class Modal extends Component {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.props.willUnmount()
     this.container.removeChild(this.modal)
     this.unsubscribe()
@@ -104,8 +103,8 @@ class Modal extends Component {
     if (!isActive) willClose()
   }
 
-  getStyles = (name) => {
-    const { center, maxWidth, zIndex } = this.props
+  getStyles = name => {
+    const { center, maxWidth, zIndex, overlayColor } = this.props
     switch (name) {
       case 'wrapper': {
         let style = {
@@ -118,7 +117,7 @@ class Modal extends Component {
         return style
       }
       case 'overlay': {
-        return { ...styles.overlay }
+        return { ...styles.overlay, background: overlayColor }
       }
       case 'bodyWrapper': {
         return { ...styles.bodyWrapper }
@@ -157,58 +156,23 @@ class Modal extends Component {
     this.onCloseModal()
   }
 
-  handleClickDialogClick = (event) => {
-    event.stopPropagation()
-  }
-
   renderCustomUI = () => {
     const { title, children } = this.props
     return this.context.customUI(title, children, this.onCloseModal)
   }
 
-  render () {
+  render() {
     const { isActive } = this.state
-    const { title, children, className, overlayColor } = this.props
-    // if (!isActive) return null
+    const { title, children, className } = this.props
 
     const element = (
-      <Animate
-        show={isActive}
-        start={{
-          opacity: 0,
-          opacityModal: 0,
-          y: -100
-        }}
-        enter={[
-          {
-            opacity: [ 1 ],
-            timing: { duration: 300, ease: easeCircleOut }
-          },
-          {
-            y: [ 0 ],
-            opacityModal: [ 1 ],
-            timing: { delay: 500, duration: 500, ease: easeBackOut }
-          }
-        ]}
-        leave={[
-          {
-            y: [ -100 ],
-            opacityModal: [ 0 ],
-            timing: { duration: 500, ease: easeBackOut }
-          },
-          {
-            opacity: [ 0 ],
-            timing: { delay: 300, duration: 300, ease: easeCircleOut }
-          }
-        ]}
-      >
+      <Animation show={isActive}>
         {({ opacity, opacityModal, y }) => (
           <div role='wrapper' style={this.getStyles('wrapper')}>
             <div
               role='overlay'
               style={{
                 ...this.getStyles('overlay'),
-                background: overlayColor,
                 opacity
               }}
               onClick={this.handleClickCloseOverlay}
@@ -220,37 +184,55 @@ class Modal extends Component {
                 opacity: opacityModal,
                 transform: `translate3d(0px, ${y}px, 0px)`
               }}
-              onClick={this.handleClickDialogClick}
             >
-              {this.renderCustomUI()}
-              {!this.renderCustomUI() && (
-                <div
-                  role='dialog-body'
-                  className={className}
-                  style={{ ...this.getStyles('body') }}
-                >
+              <Body>
+                {this.renderCustomUI()}
+                {!this.renderCustomUI() && (
                   <div
-                    role='content'
-                    style={this.getStyles('buttonArrow')}
-                    onClick={this.onCloseModal}
+                    role='dialog-body'
+                    className={className}
+                    style={{ ...this.getStyles('body') }}
                   >
-                    <div style={this.getStyles('arrowLeft')} />
-                    <div style={this.getStyles('arrowRight')} />
+                    <div
+                      role='content'
+                      style={this.getStyles('buttonArrow')}
+                      onClick={this.onCloseModal}
+                    >
+                      <div style={this.getStyles('arrowLeft')} />
+                      <div style={this.getStyles('arrowRight')} />
+                    </div>
+                    {title !== '' && (
+                      <div role='dialog-title' style={this.getStyles('title')}>
+                        {title}
+                      </div>
+                    )}
+                    <div
+                      role='dialog-content'
+                      style={this.getStyles('content')}
+                    >
+                      {children}
+                    </div>
                   </div>
-                  {title !== '' && (
-                    <div role='dialog-title' style={this.getStyles('title')}>{title}</div>
-                  )}
-                  <div role='dialog-content' style={this.getStyles('content')}>{children}</div>
-                </div>
-              )}
+                )}
+              </Body>
             </div>
           </div>
         )}
-      </Animate>
+      </Animation>
     )
 
     return ReactDOM.createPortal(element, this.modal)
   }
 }
+
+const Body = ({ children }) => (
+  <div
+    style={{
+      pointerEvents: 'auto'
+    }}
+  >
+    {children}
+  </div>
+)
 
 export default Modal

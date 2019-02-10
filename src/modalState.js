@@ -34,11 +34,10 @@ export default () => {
 
   const subscriber = (listener) => {
     listeners = [ ...listeners, listener ]
-    // console.log('listeners', listeners)
+
     return () => {
       const index = listeners.indexOf(listener)
       listeners.splice(index, 1)
-      // console.log('listeners', listeners)
     }
   }
 

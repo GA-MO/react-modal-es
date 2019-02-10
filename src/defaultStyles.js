@@ -28,7 +28,7 @@ export default {
     background: '#fff',
     borderRadius: '5px',
     marginTop: '30px',
-    pointerEvents: 'auto'
+    marginBottom: '30px'
   },
   center: {
     display: 'flex',
