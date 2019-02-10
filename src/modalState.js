@@ -8,8 +8,8 @@ export default () => {
   }
 
   const callListeners = (modalNameActiveObj) => {
-    listeners.forEach((listner) => {
-      listner(modalNameActiveObj)
+    listeners.forEach((listener) => {
+      listener(modalNameActiveObj)
     })
   }
 
@@ -34,14 +34,11 @@ export default () => {
 
   const subscriber = (listener) => {
     listeners = [ ...listeners, listener ]
-
-    console.log('listeners', listeners)
-
+    // console.log('listeners', listeners)
     return () => {
       const index = listeners.indexOf(listener)
       listeners.splice(index, 1)
-
-      console.log('listeners', listeners)
+      // console.log('listeners', listeners)
     }
   }
 
