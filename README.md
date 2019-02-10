@@ -112,8 +112,8 @@ class Page extends React.Component {
   render() {
     return (
       <div>
-        <Modal name='modal1' title='Title Modal 1' zIndex='1'>Content 1</Modal>
-        <Modal name='modal2' title='Title Modal 2' zIndex='2'>Content 2</Modal>
+        <Modal name='modal1' title='Title Modal 1' zIndex={1}>Content 1</Modal>
+        <Modal name='modal2' title='Title Modal 2' zIndex={2}>Content 2</Modal>
         <button onClick={this.onOpenModal}>Open Modal</button>
       </div>
     )
@@ -127,7 +127,7 @@ class Page extends React.Component {
 <Modal
   name='myModal'
   title='Modal Title'
-  zIndex='1'
+  zIndex={1}
   className='your-classname'
   maxWidth='600px'
   overlayColor='rgba(0, 0, 0, 0.7)'

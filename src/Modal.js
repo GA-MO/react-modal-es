@@ -63,7 +63,6 @@ class Modal extends Component {
     this.setState({
       isActive: this.context.isModalActive(this.props.name)
     })
-
     this.unsubscribe = this.context.subscriber(this.subscriber)
 
     if (canUseDOM()) {
@@ -113,24 +112,21 @@ class Modal extends Component {
           ...styles.wrapper,
           zIndex
         }
-
         if (center) {
           style = { ...style, ...styles.center }
         }
-
         return style
       }
       case 'overlay': {
         return { ...styles.overlay }
       }
-      case 'bodyWraper': {
-        return { ...styles.bodyWraper }
+      case 'bodyWrapper': {
+        return { ...styles.bodyWrapper }
       }
       case 'body': {
         if (maxWidth) {
           return { ...styles.body, width: '100%', maxWidth }
         }
-
         return { ...styles.body }
       }
       case 'title': {
@@ -153,13 +149,16 @@ class Modal extends Component {
 
   onCloseModal = () => {
     this.context.closeModal(this.props.name)
-    this.props.willClose()
   }
 
   handleClickCloseOverlay = () => {
     const { closeOverlayDisabled } = this.props
     if (closeOverlayDisabled) return false
     this.onCloseModal()
+  }
+
+  handleClickDialogClick = (event) => {
+    event.stopPropagation()
   }
 
   renderCustomUI = () => {
@@ -204,8 +203,9 @@ class Modal extends Component {
         ]}
       >
         {({ opacity, opacityModal, y }) => (
-          <div style={this.getStyles('wrapper')}>
+          <div role='wrapper' style={this.getStyles('wrapper')}>
             <div
+              role='overlay'
               style={{
                 ...this.getStyles('overlay'),
                 background: overlayColor,
@@ -214,19 +214,23 @@ class Modal extends Component {
               onClick={this.handleClickCloseOverlay}
             />
             <div
+              role='dialog'
               style={{
-                ...this.getStyles('bodyWraper'),
+                ...this.getStyles('bodyWrapper'),
                 opacity: opacityModal,
                 transform: `translate3d(0px, ${y}px, 0px)`
               }}
+              onClick={this.handleClickDialogClick}
             >
               {this.renderCustomUI()}
               {!this.renderCustomUI() && (
                 <div
+                  role='dialog-body'
                   className={className}
                   style={{ ...this.getStyles('body') }}
                 >
                   <div
+                    role='content'
                     style={this.getStyles('buttonArrow')}
                     onClick={this.onCloseModal}
                   >
@@ -234,9 +238,9 @@ class Modal extends Component {
                     <div style={this.getStyles('arrowRight')} />
                   </div>
                   {title !== '' && (
-                    <div style={this.getStyles('title')}>{title}</div>
+                    <div role='dialog-title' style={this.getStyles('title')}>{title}</div>
                   )}
-                  <div style={this.getStyles('content')}>{children}</div>
+                  <div role='dialog-content' style={this.getStyles('content')}>{children}</div>
                 </div>
               )}
             </div>
