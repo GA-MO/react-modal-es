@@ -16,17 +16,22 @@ export default {
     bottom: 0,
     background: 'rgba(0, 0, 0, 0.7)'
   },
-  bodyWraper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexGrow: 1,
-    flexShrink: 0
-  },
-  body: {
+  bodyWrapper: {
+    // display: 'flex',
+    // justifyContent: 'center',
+    // flexGrow: 1,
+    // flexShrink: 0
     position: 'relative',
     background: '#fff',
     borderRadius: '5px',
-    marginTop: '30px'
+    margin: '1.75rem auto'
+  },
+  body: {
+    width: '100%'
+    // position: 'relative',
+    // background: '#fff',
+    // borderRadius: '5px',
+    // margin: '1.75rem auto'
   },
   center: {
     display: 'flex',
