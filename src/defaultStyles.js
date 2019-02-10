@@ -20,13 +20,15 @@ export default {
     display: 'flex',
     justifyContent: 'center',
     flexGrow: 1,
-    flexShrink: 0
+    flexShrink: 0,
+    pointerEvents: 'none'
   },
   body: {
     position: 'relative',
     background: '#fff',
     borderRadius: '5px',
-    marginTop: '30px'
+    marginTop: '30px',
+    pointerEvents: 'auto'
   },
   center: {
     display: 'flex',
