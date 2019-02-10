@@ -16,7 +16,7 @@ export default {
     bottom: 0,
     background: 'rgba(0, 0, 0, 0.7)'
   },
-  bodyWraper: {
+  bodyWrapper: {
     display: 'flex',
     justifyContent: 'center',
     flexGrow: 1,
