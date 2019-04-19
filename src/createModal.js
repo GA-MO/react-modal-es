@@ -3,10 +3,11 @@ import provider from './provider'
 
 export default (configs = {}) => {
   const modal = modalState()
+
   return {
     openModal: modal.openModal,
     closeModal: modal.closeModal,
     closeAllModal: modal.closeAllModal,
-    connectModal: provider(modal)(configs)
+    ModalProvider: provider(modal)(configs)
   }
 }

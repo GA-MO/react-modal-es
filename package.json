@@ -64,9 +64,9 @@
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
-    "d3-ease": "^1.0.3",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-move": "^2.6.0"
+    "d3-ease": "^1.0.5",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-move": "^5.2.1"
   }
 }

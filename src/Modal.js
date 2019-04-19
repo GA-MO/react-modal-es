@@ -1,215 +1,121 @@
-import React, { Component } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import Animation from './Animation'
-import styles from './defaultStyles'
+import getStyles from './getStyles'
 import { canUseDOM } from './helper'
+import ModalContext from './ModalContext'
 
-class Modal extends Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    title: PropTypes.string,
-    center: PropTypes.bool,
-    className: PropTypes.string,
-    maxWidth: PropTypes.string,
-    zIndex: PropTypes.number,
-    overlayColor: PropTypes.string,
-    closeOverlayDisabled: PropTypes.bool,
-    didOpen: PropTypes.func,
-    willUnmount: PropTypes.func,
-    willClose: PropTypes.func
+const Modal = props => {
+  const {
+    closeOverlayDisabled,
+    title,
+    className,
+    didOpen,
+    willClose,
+    willUnmount,
+    name,
+    children
+  } = props
+  let modal = null
+
+  if (canUseDOM()) {
+    modal = document.createElement('div')
+    modal.id = props.name
   }
 
-  static defaultProps = {
-    zIndex: 0,
-    className: '',
-    overlayColor: 'rgba(0, 0, 0, 0.7)',
-    closeOverlayDisabled: false,
-    didOpen: () => false,
-    willUnmount: () => false,
-    willClose: () => false
-  }
+  const context = useContext(ModalContext)
+  const [isActive, setActive] = useState(true)
 
-  static contextTypes = {
-    isModalActive: PropTypes.func,
-    openModal: PropTypes.func,
-    closeModal: PropTypes.func,
-    closeAllModal: PropTypes.func,
-    customUI: PropTypes.func,
-    subscriber: PropTypes.func
-  }
+  useEffect(() => {
+    const subscriber = () => {
+      const isActive = context.isModalActive(name)
 
-  constructor(props) {
-    super(props)
+      setActive(isActive)
 
-    this.state = {
-      isActive: false
+      if (isActive) didOpen()
+      if (!isActive) willClose()
     }
 
-    if (canUseDOM()) {
-      this.modal = document.createElement('div')
-      this.modal.id = props.name
-    }
-  }
-
-  isActive = () => {
-    const { modalNameActive } = this.state
-    const { name } = this.props
-    return modalNameActive === name
-  }
-
-  componentDidMount() {
-    this.setState({
-      isActive: this.context.isModalActive(this.props.name)
-    })
-    this.unsubscribe = this.context.subscriber(this.subscriber)
+    const unsubscribe = context.subscriber(subscriber)
+    const id = 'body-modal-es'
+    let container = null
 
     if (canUseDOM()) {
-      const id = 'body-modal-es'
-      this.container = document.getElementById(id)
+      container = document.getElementById(id)
 
-      if (!this.container) {
-        this.container = document.createElement('div')
-        this.container.id = id
-        this.container.style.cssText = `
+      if (!container) {
+        container = document.createElement('div')
+        container.id = id
+        container.style.cssText = `
           position: fixed;
           top: 0;
           left: 0;
           right: 0;
           z-index: 99;
         `
-        document.body.appendChild(this.container)
+        document.body.appendChild(container)
       }
 
-      this.container.appendChild(this.modal)
+      container.appendChild(modal)
     }
-  }
-
-  componentWillUnmount() {
-    this.props.willUnmount()
-    this.container.removeChild(this.modal)
-    this.unsubscribe()
-  }
-
-  subscriber = () => {
-    const { didOpen, willClose, name } = this.props
-    const isActive = this.context.isModalActive(name)
-
-    this.setState({
-      isActive
-    })
-
-    if (isActive) didOpen()
-    if (!isActive) willClose()
-  }
-
-  getStyles = name => {
-    const { center, maxWidth, zIndex, overlayColor } = this.props
-    switch (name) {
-      case 'wrapper': {
-        let style = {
-          ...styles.wrapper,
-          zIndex
-        }
-        if (center) {
-          style = { ...style, ...styles.center }
-        }
-        return style
-      }
-      case 'overlay': {
-        return { ...styles.overlay, background: overlayColor }
-      }
-      case 'bodyWrapper': {
-        return { ...styles.bodyWrapper }
-      }
-      case 'body': {
-        if (maxWidth) {
-          return { ...styles.body, width: '100%', maxWidth }
-        }
-        return { ...styles.body }
-      }
-      case 'title': {
-        return { ...styles.title }
-      }
-      case 'content': {
-        return { ...styles.content }
-      }
-      case 'buttonArrow': {
-        return { ...styles.buttonArrow }
-      }
-      case 'arrowLeft': {
-        return { ...styles.arrow, transform: 'rotate(45deg)' }
-      }
-      case 'arrowRight': {
-        return { ...styles.arrow, transform: 'rotate(-45deg)' }
-      }
+    return () => {
+      willUnmount()
+      container.removeChild(modal)
+      unsubscribe()
     }
+  }, [])
+
+  const onCloseModal = () => {
+    context.closeModal(name)
   }
 
-  onCloseModal = () => {
-    this.context.closeModal(this.props.name)
-  }
-
-  handleClickCloseOverlay = () => {
-    const { closeOverlayDisabled } = this.props
+  const handleClickCloseOverlay = () => {
     if (closeOverlayDisabled) return false
-    this.onCloseModal()
+    onCloseModal()
   }
 
-  renderCustomUI = () => {
-    const { title, children } = this.props
-    return this.context.customUI(title, children, this.onCloseModal)
+  const renderCustomUI = () => {
+    return context.customUI(title, children, onCloseModal)
   }
 
-  render() {
-    const { isActive } = this.state
-    const { title, children, className } = this.props
+  const style = getStyles(props)
 
-    const element = (
+  const element = (
+    <div className='kkk'>
       <Animation show={isActive}>
         {({ opacity, opacityModal, y }) => (
-          <div role='wrapper' style={this.getStyles('wrapper')}>
+          <div role='wrapper' style={style('wrapper')}>
             <div
               role='overlay'
               style={{
-                ...this.getStyles('overlay'),
+                ...style('overlay'),
                 opacity
               }}
-              onClick={this.handleClickCloseOverlay}
+              onClick={handleClickCloseOverlay}
             />
             <div
-              role='dialog'
+              role='modal'
               style={{
-                ...this.getStyles('bodyWrapper'),
+                ...style('bodyWrapper'),
                 opacity: opacityModal,
                 transform: `translate3d(0px, ${y}px, 0px)`
               }}
             >
               <Body>
-                {this.renderCustomUI()}
-                {!this.renderCustomUI() && (
-                  <div
-                    role='dialog-body'
-                    className={className}
-                    style={{ ...this.getStyles('body') }}
-                  >
-                    <div
-                      role='content'
-                      style={this.getStyles('buttonArrow')}
-                      onClick={this.onCloseModal}
-                    >
-                      <div style={this.getStyles('arrowLeft')} />
-                      <div style={this.getStyles('arrowRight')} />
+                {renderCustomUI()}
+                {!renderCustomUI() && (
+                  <div role='modal-body' className={className} style={style('body')}>
+                    <div role='content' style={style('buttonArrow')} onClick={onCloseModal}>
+                      <div style={style('arrowLeft')} />
+                      <div style={style('arrowRight')} />
                     </div>
                     {title !== '' && (
-                      <div role='dialog-title' style={this.getStyles('title')}>
+                      <div role='modal-title' style={style('title')}>
                         {title}
                       </div>
                     )}
-                    <div
-                      role='dialog-content'
-                      style={this.getStyles('content')}
-                    >
+                    <div role='modal-content' style={style('content')}>
                       {children}
                     </div>
                   </div>
@@ -219,10 +125,35 @@ class Modal extends Component {
           </div>
         )}
       </Animation>
-    )
+    </div>
+  )
 
-    return ReactDOM.createPortal(element, this.modal)
-  }
+  console.log('modal', modal)
+  return ReactDOM.createPortal(element, modal)
+}
+
+Modal.propTypes = {
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  center: PropTypes.bool,
+  className: PropTypes.string,
+  maxWidth: PropTypes.string,
+  zIndex: PropTypes.number,
+  overlayColor: PropTypes.string,
+  closeOverlayDisabled: PropTypes.bool,
+  didOpen: PropTypes.func,
+  willUnmount: PropTypes.func,
+  willClose: PropTypes.func
+}
+
+Modal.defaultProps = {
+  zIndex: 0,
+  className: '',
+  overlayColor: 'rgba(0, 0, 0, 0.7)',
+  closeOverlayDisabled: false,
+  didOpen: () => false,
+  willUnmount: () => false,
+  willClose: () => false
 }
 
 const Body = ({ children }) => (
