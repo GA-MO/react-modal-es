@@ -1,23 +1,21 @@
-# react-modal-es
-Easy to control the Modal everywhere.
+# react-modal-es V1
 
-[![Build Status](https://circleci.com/gh/GA-MO/react-modal-es.svg)](https://circleci.com/gh/GA-MO/react-modal-es)
-[![npm version](https://badge.fury.io/js/react-modal-es.svg)](https://badge.fury.io/js/react-modal-es)
+Easy to control the Modal everywhere.
 
 ## Table of Contents
 
-* [Installation](#installation)
-* [Usage](#usage)
-  * Step1: [Create Modal](#create-modal)
-  * Step2: [Connect Modal](#connect-modal)
-  * Step3: [Modal Component](#modal-component)
-* [Props](#props)
-* [Config options](#config-options)
-  * [Custom UI](#custom-ui)
-* [Demo](#demo)
-  * [Basic Modal](https://codesandbox.io/s/lpl3524q8z)
-  * [Multiple Modal](https://codesandbox.io/s/301k3j55pq)
-  * [Custom UI Modal](https://codesandbox.io/s/p970p0484m)
+- [Installation](#installation)
+- [Usage](#usage)
+  - Step1: [Create Modal](#create-modal)
+  - Step2: [Connect Modal](#connect-modal)
+  - Step3: [Modal Component](#modal-component)
+- [Props](#props)
+- [Config options](#config-options)
+  - [Custom UI](#custom-ui)
+- [Demo](#demo)
+  - [Basic Modal](https://codesandbox.io/s/lpl3524q8z)
+  - [Multiple Modal](https://codesandbox.io/s/301k3j55pq)
+  - [Custom UI Modal](https://codesandbox.io/s/p970p0484m)
 
 ## Installation
 
@@ -26,33 +24,34 @@ To install, you can use [npm](https://npmjs.org/) or [yarn](https://yarnpkg.com)
     $ npm install react-modal-es
     $ yarn add react-modal-es
 
-
 ## Usage
 
 ### Step1:
-### Create modal
-Create file `modal.js` and import `createModal` to create modal functions:
- - `openModal(modalName)` to show the Modal
- - `closeModal(modalName)` to hide the Modal
- - `closeAllModal()` to hide all Modals
- - `connectModal` to [Connect Modal](#connect-modal) at root app
-```jsx
-import { createModal } from 'react-modal-es'
 
-const modal = createModal()
-export const openModal = modal.openModal
-export const closeModal = modal.closeModal
-export const closeAllModal = modal.closeAllModal
-export const connectModal = modal.connectModal
+### Create modal
+
+Create file `modal.js` and import `createModal` to create modal functions:
+
+- `openModal(modalName)` to show the Modal
+- `closeModal(modalName)` to hide the Modal
+- `closeAllModal()` to hide all Modals
+- `connectModal` to [Connect Modal](#connect-modal) at root app
+
+```jsx
+import { createModal } from 'react-modal-es';
+
+const modal = createModal();
+export const openModal = modal.openModal;
+export const closeModal = modal.closeModal;
+export const closeAllModal = modal.closeAllModal;
+export const connectModal = modal.connectModal;
 ```
 
-
-
 ### Step2:
+
 ### Connect Modal
 
 import `connectModal` from `modal.js` and connect modal at root app.
-
 
 ```jsx
 ...
@@ -72,51 +71,59 @@ class App extends React.Component {
 ReactDOM.render(<App />, document.getElementById('root'))
 ```
 
-
 ### Step3:
+
 ### Modal Component
+
 The Modal has one required prop [Demo](https://codesandbox.io/s/lpl3524q8z):
 
 - `name` to switch show and hide.
 
 ```jsx
-import Modal from 'react-modal-es'
-import { openModal, closeModal, closeAllModal } from './modal'
+import Modal from 'react-modal-es';
+import { openModal, closeModal, closeAllModal } from './modal';
 
 class Page extends React.Component {
   render() {
     return (
       <div>
-        <Modal name='myModal' title='Title Modal'>Content</Modal>
+        <Modal name='myModal' title='Title Modal'>
+          Content
+        </Modal>
         <button onClick={() => openModal('myModal')}>Open Modal</button>
       </div>
-    )
+    );
   }
 }
 ```
 
 #### Open multiple Modals
+
 Support open multilple modal [demo](https://codesandbox.io/s/301k3j55pq)
 
 Use prop `zIndex` to make a layer of Modal
 
 ```jsx
-import Modal from 'react-modal-es'
-import { openModal, closeModal, closeAllModal } from './modal'
+import Modal from 'react-modal-es';
+import { openModal, closeModal, closeAllModal } from './modal';
 
 class Page extends React.Component {
   onOpenModal = () => {
-    openModal('modal1')
-    openModal('modal2')
-  }
+    openModal('modal1');
+    openModal('modal2');
+  };
   render() {
     return (
       <div>
-        <Modal name='modal1' title='Title Modal 1' zIndex={1}>Content 1</Modal>
-        <Modal name='modal2' title='Title Modal 2' zIndex={2}>Content 2</Modal>
+        <Modal name='modal1' title='Title Modal 1' zIndex={1}>
+          Content 1
+        </Modal>
+        <Modal name='modal2' title='Title Modal 2' zIndex={2}>
+          Content 2
+        </Modal>
         <button onClick={this.onOpenModal}>Open Modal</button>
       </div>
-    )
+    );
   }
 }
 ```
@@ -137,18 +144,21 @@ class Page extends React.Component {
   willUnmount={() => null}
   willClose={() => null}
 >
-...
+  ...
 </Modal>
 ```
 
 ## Config options
+
 ### Custom UI
+
 Building your own custom UI and Style [demo](https://codesandbox.io/s/p970p0484m)
 
 3 parameters of `customUI`
-  - `title` type string
-  - `children` type node
-  - `onClose` type function
+
+- `title` type string
+- `children` type node
+- `onClose` type function
 
 ```jsx
 import React from 'react'
