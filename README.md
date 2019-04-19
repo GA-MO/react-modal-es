@@ -7,9 +7,9 @@ Easy to control the Modal everywhere.
 
 **Note:** Version 2.x is require React 16.8.x
 
-[Migrating from 1.x](https://github.com/GA-MO/react-modal-es/blob/master/Migrating-from-1x.md)
+[Migrating from 1.x](./Migrating-from-1x.md)
 
-[1.x docs](https://github.com/GA-MO/react-modal-es/blob/master/Document-v1.md)
+[1.x docs](./Document-v1.md)
 
 ## Table of Contents
 

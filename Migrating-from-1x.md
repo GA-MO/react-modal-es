@@ -35,39 +35,29 @@ export const ModalProvider = modal.ModalProvider; // add
 ### Use `ModalProvider` instead of `createModal`
 
 ```jsx
-...
 // V1
 
-import { connectModal } from './modal'
+import { connectModal } from './modal';
 
 @connectModal
 class App extends React.Component {
   render() {
-    return (
-      <div>
-        ...
-      </div>
-    )
+    return <div>...</div>;
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 to
 
 ```jsx
-...
 // V2
 
 import { ModalProvider } from './modal';
 
 const App = () => {
-  return (
-    <ModalProvider>
-      ...
-    </ModalProvider>
-  );
+  return <ModalProvider>...</ModalProvider>;
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));
