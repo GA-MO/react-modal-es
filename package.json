@@ -1,6 +1,6 @@
 {
   "name": "react-modal-es",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Easy to control the Modal everywhere.",
   "main": "lib/index.js",
   "scripts": {
@@ -67,8 +67,7 @@
     "d3-ease": "^1.0.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-move": "^5.2.1",
-    "react-spring": "^8.0.19"
+    "react-move": "^5.2.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
