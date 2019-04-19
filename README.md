@@ -91,12 +91,12 @@ import { openModal, closeModal, closeAllModal } from './modal';
 
 const Page = () => {
   return (
-    <>
+    <div>
       <Modal name='myModal' title='Title Modal'>
         Content
       </Modal>
       <button onClick={() => openModal('myModal')}>Open Modal</button>
-    </>
+    </div>
   );
 };
 ```
@@ -118,7 +118,7 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div>
       <Modal name='modal1' title='Title Modal 1' zIndex={1}>
         Content 1
       </Modal>
@@ -126,7 +126,7 @@ const Page = () => {
         Content 2
       </Modal>
       <button onClick={onOpenModal}>Open Modal</button>
-    </>
+    </div>
   );
 };
 ```
