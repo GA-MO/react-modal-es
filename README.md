@@ -22,9 +22,9 @@ Easy to control the Modal everywhere.
 - [Config options](#config-options)
   - [Custom UI](#custom-ui)
 - [Demo](#demo)
-  - [Basic Modal](https://codesandbox.io/s/lpl3524q8z)
-  - [Multiple Modal](https://codesandbox.io/s/301k3j55pq)
-  - [Custom UI Modal](https://codesandbox.io/s/p970p0484m)
+  - [Basic Modal](https://codesandbox.io/s/l8qjm0wnz)
+  - [Multiple Modal](https://codesandbox.io/s/ryxvyzklkn)
+  - [Custom UI Modal](https://codesandbox.io/s/8z8yxqnmp8)
 
 ## Installation
 
