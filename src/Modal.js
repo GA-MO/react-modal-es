@@ -6,6 +6,10 @@ import getStyles from './getStyles'
 import { canUseDOM } from './helper'
 import ModalContext from './ModalContext'
 
+let modal = canUseDOM() && document.createElement('div')
+const id = 'body-modal-es'
+let container = null
+
 const Modal = props => {
   const {
     closeOverlayDisabled,
@@ -17,31 +21,21 @@ const Modal = props => {
     name,
     children
   } = props
-  let modal = null
-
-  if (canUseDOM()) {
-    modal = document.createElement('div')
-    modal.id = props.name
-  }
 
   const context = useContext(ModalContext)
-  const [isActive, setActive] = useState(true)
+  const [isActive, setActive] = useState(context.isModalActive(name))
+
+  const subscriber = () => {
+    const isActive = context.isModalActive(name)
+
+    setActive(isActive)
+
+    if (isActive) didOpen()
+  }
 
   useEffect(() => {
-    const subscriber = () => {
-      const isActive = context.isModalActive(name)
-
-      setActive(isActive)
-
-      if (isActive) didOpen()
-      if (!isActive) willClose()
-    }
-
-    const unsubscribe = context.subscriber(subscriber)
-    const id = 'body-modal-es'
-    let container = null
-
     if (canUseDOM()) {
+      modal.id = props.name
       container = document.getElementById(id)
 
       if (!container) {
@@ -59,6 +53,9 @@ const Modal = props => {
 
       container.appendChild(modal)
     }
+
+    const unsubscribe = context.subscriber(subscriber)
+
     return () => {
       willUnmount()
       container.removeChild(modal)
@@ -67,6 +64,7 @@ const Modal = props => {
   }, [])
 
   const onCloseModal = () => {
+    willClose()
     context.closeModal(name)
   }
 
@@ -82,53 +80,50 @@ const Modal = props => {
   const style = getStyles(props)
 
   const element = (
-    <div className='kkk'>
-      <Animation show={isActive}>
-        {({ opacity, opacityModal, y }) => (
-          <div role='wrapper' style={style('wrapper')}>
-            <div
-              role='overlay'
-              style={{
-                ...style('overlay'),
-                opacity
-              }}
-              onClick={handleClickCloseOverlay}
-            />
-            <div
-              role='modal'
-              style={{
-                ...style('bodyWrapper'),
-                opacity: opacityModal,
-                transform: `translate3d(0px, ${y}px, 0px)`
-              }}
-            >
-              <Body>
-                {renderCustomUI()}
-                {!renderCustomUI() && (
-                  <div role='modal-body' className={className} style={style('body')}>
-                    <div role='content' style={style('buttonArrow')} onClick={onCloseModal}>
-                      <div style={style('arrowLeft')} />
-                      <div style={style('arrowRight')} />
-                    </div>
-                    {title !== '' && (
-                      <div role='modal-title' style={style('title')}>
-                        {title}
-                      </div>
-                    )}
-                    <div role='modal-content' style={style('content')}>
-                      {children}
-                    </div>
+    <Animation show={isActive}>
+      {({ opacity, opacityModal, y }) => (
+        <div role='wrapper' style={style('wrapper')}>
+          <div
+            role='overlay'
+            style={{
+              ...style('overlay'),
+              opacity
+            }}
+            onClick={handleClickCloseOverlay}
+          />
+          <div
+            role='modal'
+            style={{
+              ...style('bodyWrapper'),
+              opacity: opacityModal,
+              transform: `translate3d(0px, ${y}px, 0)`
+            }}
+          >
+            <Body>
+              {renderCustomUI()}
+              {!renderCustomUI() && (
+                <div role='modal-body' className={className} style={style('body')}>
+                  <div role='content' style={style('buttonArrow')} onClick={onCloseModal}>
+                    <div style={style('arrowLeft')} />
+                    <div style={style('arrowRight')} />
                   </div>
-                )}
-              </Body>
-            </div>
+                  {title !== '' && (
+                    <div role='modal-title' style={style('title')}>
+                      {title}
+                    </div>
+                  )}
+                  <div role='modal-content' style={style('content')}>
+                    {children}
+                  </div>
+                </div>
+              )}
+            </Body>
           </div>
-        )}
-      </Animation>
-    </div>
+        </div>
+      )}
+    </Animation>
   )
 
-  console.log('modal', modal)
   return ReactDOM.createPortal(element, modal)
 }
 

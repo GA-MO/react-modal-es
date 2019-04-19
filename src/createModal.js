@@ -3,7 +3,6 @@ import provider from './provider'
 
 export default (configs = {}) => {
   const modal = modalState()
-
   return {
     openModal: modal.openModal,
     closeModal: modal.closeModal,
