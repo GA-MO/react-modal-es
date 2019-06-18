@@ -6,7 +6,6 @@ import getStyles from './getStyles'
 import { canUseDOM } from './helper'
 import ModalContext from './ModalContext'
 
-let modal = canUseDOM() && document.createElement('div')
 const id = 'body-modal-es'
 let container = null
 
@@ -24,6 +23,7 @@ const Modal = props => {
 
   const context = useContext(ModalContext)
   const [isActive, setActive] = useState(context.isModalActive(name))
+  const [modal, setModal] = useState(null)
 
   const subscriber = () => {
     const isActive = context.isModalActive(name)
@@ -35,6 +35,7 @@ const Modal = props => {
 
   useEffect(() => {
     if (canUseDOM()) {
+      let modal = document.createElement('div')
       modal.id = props.name
       container = document.getElementById(id)
 
@@ -50,15 +51,17 @@ const Modal = props => {
         `
         document.body.appendChild(container)
       }
-
       container.appendChild(modal)
+      setModal(modal)
     }
 
     const unsubscribe = context.subscriber(subscriber)
 
     return () => {
       willUnmount()
-      container.removeChild(modal)
+      if (canUseDOM() && modal) {
+        container.removeChild(modal)
+      }
       unsubscribe()
     }
   }, [])
@@ -124,7 +127,7 @@ const Modal = props => {
     </Animation>
   )
 
-  return ReactDOM.createPortal(element, modal)
+  return modal && ReactDOM.createPortal(element, modal)
 }
 
 Modal.propTypes = {
