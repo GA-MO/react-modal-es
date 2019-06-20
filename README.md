@@ -178,10 +178,10 @@ const customStyles = {
  ...
 }
 
-const customUIComponent = (title, children, onClose) => (
+const customUIComponent = (props, onClose) => (
   <div style={customStyles.body}>
-    <div style={customStyles.title}>{title}</div>
-    <div style={customStyles.content}>{children}</div>
+    <div style={customStyles.title}>{props.title}</div>
+    <div style={customStyles.content}>{props.children}</div>
     <button style={customStyles.button} onClick={onClose}>
       close
     </button>

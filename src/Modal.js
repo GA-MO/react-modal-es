@@ -77,7 +77,7 @@ const Modal = props => {
   }
 
   const renderCustomUI = () => {
-    return context.customUI(title, children, onCloseModal)
+    return context.customUI(props, onCloseModal)
   }
 
   const style = getStyles(props)
